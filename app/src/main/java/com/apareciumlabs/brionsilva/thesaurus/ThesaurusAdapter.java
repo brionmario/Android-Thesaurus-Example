@@ -39,7 +39,7 @@ public class ThesaurusAdapter extends ArrayAdapter<Synonym> {
         if(null == row){
             //No recycled View, we have to inflate one.
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = (RelativeLayout)inflater.inflate(R.layout.list_row, null);
+            row = (RelativeLayout)inflater.inflate(R.layout.list_row_thesaurus, null);
         }
 
         //initializing the two text views

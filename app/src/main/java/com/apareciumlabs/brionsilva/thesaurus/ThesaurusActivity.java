@@ -47,7 +47,7 @@ public class ThesaurusActivity extends AppCompatActivity implements View.OnClick
     //variables to store the input from the text box
     private String inputWord;
     //constant for the thesaurus service key
-    public static final String THESAURUS_KEY = "UntLDHf7wjETU9pRAKzY";
+    public static final String THESAURUS_KEY = " YOUR THESAURUS KEY "; //obtain one from here http://thesaurus.altervista.org/mykey
     //variable to store the language
     private String lang = "en_US";
 
@@ -100,7 +100,7 @@ public class ThesaurusActivity extends AppCompatActivity implements View.OnClick
             LayoutInflater inflater = (LayoutInflater) ThesaurusActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //initiate the view
-            View layout = inflater.inflate(R.layout.list_view,
+            View layout = inflater.inflate(R.layout.list_view_thesaurus,
                     (ViewGroup) findViewById(R.id.popUpList));
 
             //initialize a size for the popup
