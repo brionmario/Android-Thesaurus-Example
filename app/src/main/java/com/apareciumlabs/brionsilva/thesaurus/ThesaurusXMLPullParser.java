@@ -29,21 +29,21 @@ public class ThesaurusXMLPullParser {
 
     public static List<Synonym> getSynonymsFromFile(Context ctx) {
 
-        // List of StackSites that we will return
-        List<Synonym> stackSites;
-        stackSites = new ArrayList<Synonym>();
+        // List of synonyms that we will return
+        List<Synonym> synonymList;
+        synonymList = new ArrayList<Synonym>();
 
-        // temp holder for current StackSite while parsing
-        Synonym curStackSite = null;
-        // temp holder for current text value while parsing
-        String curText = "";
+        // temp holder for the current synonym while parsing
+        Synonym currentSynonym = null;
+        // temp holder for the current text value while parsing
+        String currentText = "";
 
         try {
-            // Get our factory and PullParser
+            // Get factory and PullParser
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             XmlPullParser xpp = factory.newPullParser();
 
-            // Open up InputStream and Reader of our file.
+            // Open up InputStream and Reader for the xml file
             FileInputStream fis = ctx.openFileInput("synonyms.xml");
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 
@@ -56,34 +56,34 @@ public class ThesaurusXMLPullParser {
             // Loop through pull events until we reach END_DOCUMENT
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 // Get the current tag
-                String tagname = xpp.getName();
+                String tagName = xpp.getName();
 
                 // React to different event types appropriately
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
-                        if (tagname.equalsIgnoreCase(KEY_LIST)) {
-                            // If we are starting a new <site> block we need
-                            //a new StackSite object to represent it
-                            curStackSite = new Synonym();
+                        if (tagName.equalsIgnoreCase(KEY_LIST)) {
+                            // If we are starting a new <list> block we need
+                            //a new synonym object to represent it
+                            currentSynonym = new Synonym();
                         }
                         break;
 
                     case XmlPullParser.TEXT:
                         //grab the current text so we can use it in END_TAG event
-                        curText = xpp.getText();
+                        currentText = xpp.getText();
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (tagname.equalsIgnoreCase(KEY_LIST)) {
-                            // if </site> then we are done with current Site
+                        if (tagName.equalsIgnoreCase(KEY_LIST)) {
+                            // if </list> then we are done with current synonym
                             // add it to the list.
-                            stackSites.add(curStackSite);
-                        } else if (tagname.equalsIgnoreCase(KEY_CATEGORY)) {
-                            // if </name> use setName() on curSite
-                            curStackSite.setCategory(curText);
-                        } else if (tagname.equalsIgnoreCase(KEY_SYNONYMS)) {
-                            // if </link> use setLink() on curSite
-                            curStackSite.setSynonyms(curText);
+                            synonymList.add(currentSynonym);
+                        } else if (tagName.equalsIgnoreCase(KEY_CATEGORY)) {
+                            // if </category> , set the category for the current object using setCategory()
+                            currentSynonym.setCategory(currentText);
+                        } else if (tagName.equalsIgnoreCase(KEY_SYNONYMS)) {
+                            // if </synonyms> , set the synonym for the current object using setSynonym()
+                            currentSynonym.setSynonyms(currentText);
                         }
                         break;
 
@@ -98,6 +98,6 @@ public class ThesaurusXMLPullParser {
         }
 
         // return the populated list.
-        return stackSites;
+        return synonymList;
     }
 }
